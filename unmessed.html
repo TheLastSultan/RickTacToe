@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type= "text/javascript" src= "board.js"></script>
+        <script type= "text/javascript" src= "computer.js"></script>
+        <script type= "text/javascript" src= "human.js"></script>
+        <script type= "text/javascript" src= "game.js"></script>
+        
+        <title> Rick, Tac, Toe.</title>
+    
+        <script>
+            var c, canvas;
+            var turn = 1; 
+
+            window.onload = function(){
+                canvas = document.getElementById("canvas")
+                c = canvas.getContext("2d");
+
+                draw();
+            }
+            
+            var moves = []; 
+
+            window.onclick = function(el){
+                if(el.pageX < 620 && el.pageY < 620){
+                    var cX = Math.floor(el.pageX/(620/3));
+                    var cY = Math.floor(el.pageY/(620/3));
+
+                    console.log(cX,cY)
+                    
+                    var alreadyClicked = false;
+                    
+                    for (i in moves){
+                        if(moves[i][0] == cX && moves[i][1] ==cY){
+                            alreadyClicked = true;
+                        }
+                    }
+                    
+                    if(alreadyClicked == false){
+                        moves[(moves.length)] = [cX,cY,turn];
+                        turn = turn* -1;
+                        draw();
+                    }
+
+
+                }    
+
+            }
+
+            var bg = new Image();
+            var x = new Image();
+            var o = new Image();
+            bg.src = "./RickAndMorty/ttt_boardm.png";
+            x.src = "./RickAndMorty/ttt_rickx.png";
+            o.src = "./RickAndMorty/ttt_omorty.png";
+
+
+
+            function draw(){
+                c.clearRect(0,0,620,620); 
+
+                c.drawImage(bg, 0 , 0); 
+                
+                for(i in moves){
+                    if(moves[i][2]==1){
+                        c.drawImage(x,moves[i][0]*(620/3),moves[i][1]*(620/3));
+                    }else{
+                        c.drawImage(o, moves[i][0]*(620/3), moves[i][1]*(620/3));
+                    }
+                    
+                    
+                }
+            };
+
+
+        </script>
+    
+    </head>
+    
+    <body>
+        <canvas id = "canvas" width= "620px" height = "620px"> </canvas>
+    
+    </body>
+</html>
